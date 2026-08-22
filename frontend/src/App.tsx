@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 
 // Public Landing Page
@@ -41,43 +42,45 @@ const queryClient = new QueryClient({
 export const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Public Landing Page Route */}
-            <Route path="/" element={<LandingPage />} />
+      <ThemeProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Public Landing Page Route */}
+              <Route path="/" element={<LandingPage />} />
 
-            {/* Public Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              {/* Public Auth Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Employee Protected Routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<EmployeeDashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/attendance" element={<EmployeeAttendance />} />
-              <Route path="/leaves" element={<EmployeeLeaves />} />
-              <Route path="/payroll" element={<EmployeePayroll />} />
-              <Route path="/notifications" element={<EmployeeNotifications />} />
-            </Route>
+              {/* Employee Protected Routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<EmployeeDashboard />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/attendance" element={<EmployeeAttendance />} />
+                <Route path="/leaves" element={<EmployeeLeaves />} />
+                <Route path="/payroll" element={<EmployeePayroll />} />
+                <Route path="/notifications" element={<EmployeeNotifications />} />
+              </Route>
 
-            {/* Admin & HR Protected Routes */}
-            <Route element={<ProtectedRoute allowedRoles={['HR', 'ADMIN']} />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/employees" element={<AdminEmployees />} />
-              <Route path="/admin/employees/:id" element={<AdminEmployeeDetail />} />
-              <Route path="/admin/attendance" element={<AdminAttendance />} />
-              <Route path="/admin/leaves" element={<AdminLeaves />} />
-              <Route path="/admin/payroll" element={<AdminPayroll />} />
-              <Route path="/admin/reports" element={<AdminReports />} />
-              <Route path="/admin/audit-logs" element={<AdminAuditLogs />} />
-            </Route>
+              {/* Admin & HR Protected Routes */}
+              <Route element={<ProtectedRoute allowedRoles={['HR', 'ADMIN']} />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/employees" element={<AdminEmployees />} />
+                <Route path="/admin/employees/:id" element={<AdminEmployeeDetail />} />
+                <Route path="/admin/attendance" element={<AdminAttendance />} />
+                <Route path="/admin/leaves" element={<AdminLeaves />} />
+                <Route path="/admin/payroll" element={<AdminPayroll />} />
+                <Route path="/admin/reports" element={<AdminReports />} />
+                <Route path="/admin/audit-logs" element={<AdminAuditLogs />} />
+              </Route>
 
-            {/* Default Catch-all Redirect */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+              {/* Default Catch-all Redirect */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
