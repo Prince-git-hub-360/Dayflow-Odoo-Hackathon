@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* LIGHT THEME TOKENS */
   --color-background: #f8fafc;        /* slate-50 */
@@ -40,8 +43,8 @@
   --color-chart-4: #ef4444; /* Rose */
   --color-chart-5: #8b5cf6; /* Purple */
 
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(226, 232, 240, 0.8);
+  --glass-bg: #ffffff;
+  --glass-border: #e2e8f0;
   --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
 }
 
@@ -85,7 +88,7 @@
   --color-chart-4: #ef4444;
   --color-chart-5: #8b5cf6;
 
-  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-bg: rgba(15, 23, 42, 0.85);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
