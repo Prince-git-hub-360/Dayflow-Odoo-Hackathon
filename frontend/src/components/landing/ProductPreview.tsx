@@ -64,27 +64,40 @@ export const ProductPreview: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* OPTION 1: EMPLOYEE DASHBOARD (DARK GLASS AESTHETIC MATCHING GENERATED MOCKUP) */}
+        {/* OPTION 1: FUTURISTIC GLASSMORPHISM DASHBOARD */}
         {/* ========================================================================= */}
         {activeTab === 'employee' && (
-          <div className="space-y-5 animate-fade-in">
-            {/* Top Greeting Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 rounded-xl p-4 text-white">
+          <div className="space-y-6 animate-fade-in p-4 sm:p-6 rounded-2xl bg-slate-50 dark:bg-[#0B0F17] border border-slate-200 dark:border-slate-800/80 shadow-2xl text-slate-900 dark:text-white">
+            {/* Top Bar inside Mockup */}
+            <div className="flex items-center justify-between p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
+                  dayflow-hrms.app / employee/dashboard
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Badge variant="success">LIVE SYSTEM ACTIVE</Badge>
+              </div>
+            </div>
+
+            {/* Mock Header Greeting */}
+            <div className="p-5 rounded-xl bg-slate-900 text-white border border-slate-800 shadow-md flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-extrabold tracking-tight">Good Morning, Sarah Jenkins</h3>
                 <p className="text-xs text-slate-400 font-medium">Software Engineer • Tech Department</p>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="relative hidden sm:block">
-                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+              <div className="hidden sm:flex items-center gap-3">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                   <input
                     type="text"
                     placeholder="Search..."
                     readOnly
-                    className="bg-slate-800 border border-slate-700 rounded-lg text-xs text-slate-200 pl-8 pr-3 py-1.5 w-40 focus:outline-none"
+                    className="bg-slate-800 border border-slate-700 rounded-xl text-xs px-9 py-2 w-48 text-white focus:outline-none"
                   />
                 </div>
-                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700">
+                <div className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300">
                   <Bell className="w-4 h-4" />
                 </div>
                 <img
@@ -98,19 +111,19 @@ export const ProductPreview: React.FC = () => {
             {/* 4 Card Grid matching Option 1 generated mockup */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
               {/* Card 1: Employee Attendance Tracker (4 cols) */}
-              <div className="md:col-span-4 bg-slate-900/90 border border-slate-800 rounded-xl p-5 text-white space-y-4 shadow-xl">
+              <div className="md:col-span-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-slate-900 dark:text-white space-y-4 shadow-xl">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                     Employee Attendance Tracker
                   </span>
-                  <Clock className="w-4 h-4 text-indigo-400" />
+                  <Clock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 </div>
 
-                <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-center space-y-1">
-                  <span className="text-[10px] font-bold uppercase text-indigo-300 tracking-wider">
+                <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 text-center space-y-1">
+                  <span className="text-[10px] font-bold uppercase text-indigo-600 dark:text-indigo-300 tracking-wider">
                     Live Check-in Status
                   </span>
-                  <p className="text-base font-extrabold text-indigo-200">Checked In - 9:08 AM</p>
+                  <p className="text-base font-extrabold text-indigo-900 dark:text-indigo-200">Checked In - 9:08 AM</p>
                 </div>
 
                 <div className="flex flex-col items-center text-center pt-1">
@@ -119,32 +132,32 @@ export const ProductPreview: React.FC = () => {
                     alt="Sarah J."
                     className="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 mb-2"
                   />
-                  <h4 className="text-sm font-bold">Sarah J.</h4>
-                  <p className="text-xs text-slate-400">Shift: 9:00 AM - 5:30 PM</p>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">Sarah J.</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Shift: 9:00 AM - 5:30 PM</p>
                 </div>
 
-                <div className="space-y-2 text-xs border-t border-slate-800 pt-3">
-                  <div className="flex items-center justify-between text-slate-300">
-                    <span className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" /> Check In
+                <div className="space-y-2 text-xs border-t border-slate-200 dark:border-slate-800 pt-3">
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
+                    <span className="flex items-center gap-2 font-medium">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" /> Check In
                     </span>
-                    <span className="font-mono text-slate-400">9:08 AM</span>
+                    <span className="font-mono text-slate-500 dark:text-slate-400 font-semibold">9:08 AM</span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-400">
-                    <span className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-slate-600" /> Break
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                    <span className="flex items-center gap-2 font-medium">
+                      <span className="w-2 h-2 rounded-full bg-slate-400" /> Break
                     </span>
-                    <span className="font-mono">-- : --</span>
+                    <span className="font-mono font-semibold">-- : --</span>
                   </div>
-                  <div className="flex items-center justify-between text-slate-400">
-                    <span className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-slate-600" /> Check Out
+                  <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                    <span className="flex items-center gap-2 font-medium">
+                      <span className="w-2 h-2 rounded-full bg-slate-400" /> Check Out
                     </span>
-                    <span className="font-mono">-- : --</span>
+                    <span className="font-mono font-semibold">-- : --</span>
                   </div>
                 </div>
 
-                <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-colors">
+                <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition-colors shadow-sm">
                   VIEW TIMELINE
                 </button>
               </div>
@@ -152,41 +165,41 @@ export const ProductPreview: React.FC = () => {
               {/* Middle Section: Leave Status + Payroll (4 cols) */}
               <div className="md:col-span-4 space-y-5">
                 {/* Leave Approval Status */}
-                <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 text-white space-y-3 shadow-xl">
+                <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-slate-900 dark:text-white space-y-3 shadow-xl">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Leave Approval Status
                     </span>
-                    <FileText className="w-4 h-4 text-purple-400" />
+                    <FileText className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   </div>
 
-                  <p className="text-xs text-slate-400 font-semibold">Pending Requests (3)</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">Pending Requests (3)</p>
 
                   <div className="space-y-2 text-xs">
-                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center justify-between">
-                      <span className="font-medium">John Doe - Annual (12-14 Oct)</span>
-                      <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[10px] font-bold">
+                    <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between">
+                      <span className="font-medium text-slate-800 dark:text-slate-200">John Doe - Annual (12-14 Oct)</span>
+                      <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold">
                         PENDING
                       </span>
                     </div>
 
-                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 flex items-center justify-between">
-                      <span className="font-medium">Emily Davis - Sick (5 Oct)</span>
-                      <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                    <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between">
+                      <span className="font-medium text-slate-800 dark:text-slate-200">Emily Davis - Sick (5 Oct)</span>
+                      <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">
                         APPROVED
                       </span>
                     </div>
 
-                    <div className="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700/80 space-y-1">
-                      <div className="flex items-center justify-between">
+                    <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 space-y-1">
+                      <div className="flex items-center justify-between text-slate-800 dark:text-slate-200">
                         <span className="font-medium">Robert Smith - Annual</span>
-                        <span className="text-[10px] text-slate-400">4 Days</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400">4 Days</span>
                       </div>
                       <div className="flex items-center gap-2 pt-1">
                         <button className="flex-1 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-[10px] font-bold">
                           Approve
                         </button>
-                        <button className="flex-1 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded text-[10px] font-bold">
+                        <button className="flex-1 py-1 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded text-[10px] font-bold">
                           Deny
                         </button>
                       </div>
@@ -195,43 +208,43 @@ export const ProductPreview: React.FC = () => {
                 </div>
 
                 {/* Payroll Take-Home Summary */}
-                <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 text-white space-y-3 shadow-xl">
+                <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-slate-900 dark:text-white space-y-3 shadow-xl">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Payroll Take-Home Summary
                     </span>
-                    <IndianRupee className="w-4 h-4 text-emerald-400" />
+                    <IndianRupee className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   </div>
 
-                  <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                    <p className="text-[10px] uppercase text-purple-300 font-bold">Monthly Estimated Net Pay</p>
-                    <p className="text-2xl font-extrabold text-white">₹70,833.00</p>
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1">
+                  <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20">
+                    <p className="text-[10px] uppercase text-purple-600 dark:text-purple-300 font-bold">Monthly Estimated Net Pay</p>
+                    <p className="text-2xl font-extrabold text-slate-900 dark:text-white">₹70,833.00</p>
+                    <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 mt-1">
                       <span>Gross CTC: ₹85,000.00</span>
                       <span>Deductions: ₹14,167.00</span>
                     </div>
                   </div>
 
-                  <button className="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg text-xs font-bold transition-colors">
+                  <button className="w-full py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold transition-colors">
                     View Payslip Details
                   </button>
                 </div>
               </div>
 
               {/* Right Section: Analytics Chart (4 cols) */}
-              <div className="md:col-span-4 bg-slate-900/90 border border-slate-800 rounded-xl p-5 text-white space-y-4 shadow-xl flex flex-col justify-between">
+              <div className="md:col-span-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-slate-900 dark:text-white space-y-4 shadow-xl flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                       Analytics Chart
                     </span>
-                    <TrendingUp className="w-4 h-4 text-indigo-400" />
+                    <TrendingUp className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   </div>
-                  <p className="text-xs font-semibold text-slate-300">Workforce Productivity (Last 7 Days)</p>
-                  <p className="text-[11px] text-indigo-400 font-bold">Avg. 94% Efficiency</p>
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Workforce Productivity (Last 7 Days)</p>
+                  <p className="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold">Avg. 94% Efficiency</p>
 
                   {/* Mock Line Graph */}
-                  <div className="h-36 w-full mt-4 flex items-end justify-between gap-1.5 pb-2 border-b border-slate-800">
+                  <div className="h-36 w-full mt-4 flex items-end justify-between gap-1.5 pb-2 border-b border-slate-200 dark:border-slate-800">
                     {[65, 80, 75, 94, 88, 92, 96].map((val, idx) => (
                       <div key={idx} className="flex-1 flex flex-col items-center gap-1">
                         <div
@@ -245,13 +258,13 @@ export const ProductPreview: React.FC = () => {
                 </div>
 
                 <div className="space-y-2 text-xs pt-2">
-                  <div className="flex items-center justify-between text-slate-300">
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
                     <span>Average Engagement</span>
-                    <strong className="text-emerald-400 font-bold">91%</strong>
+                    <strong className="text-emerald-600 dark:text-emerald-400 font-bold">91%</strong>
                   </div>
-                  <div className="flex items-center justify-between text-slate-300">
+                  <div className="flex items-center justify-between text-slate-700 dark:text-slate-300">
                     <span>Absenteeism Rate</span>
-                    <strong className="text-indigo-400 font-bold">2.1%</strong>
+                    <strong className="text-indigo-600 dark:text-indigo-400 font-bold">2.1%</strong>
                   </div>
                 </div>
               </div>
