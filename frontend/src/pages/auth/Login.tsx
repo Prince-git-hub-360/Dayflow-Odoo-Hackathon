@@ -50,9 +50,15 @@ export const Login: React.FC = () => {
       await login(data.email, data.password);
       navigate('/dashboard');
     } catch (err: any) {
-      setErrorMessage(
-        err.response?.data?.detail || 'Login failed. Please check your credentials.'
-      );
+      const status = err.response?.status;
+      const detail = err.response?.data?.detail || '';
+      if (status === 404 || detail.toLowerCase().includes('not found') || detail.toLowerCase().includes('user')) {
+        setErrorMessage('User account not found. Please verify your email or create a new account.');
+      } else if (status === 401 || detail.toLowerCase().includes('incorrect') || detail.toLowerCase().includes('password')) {
+        setErrorMessage('Incorrect password. Please verify your credentials and try again.');
+      } else {
+        setErrorMessage(detail || 'Log in failed. User not found or invalid credentials.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -98,9 +104,25 @@ export const Login: React.FC = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md z-10 px-4">
         <div className="glass-card rounded-2xl p-8 shadow-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95">
           {errorMessage && (
-            <div className="mb-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 flex items-center gap-3 text-rose-700 dark:text-rose-400 text-sm font-semibold">
-              <AlertCircle className="w-5 h-5 shrink-0" />
-              <span>{errorMessage}</span>
+            <div className="mb-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 space-y-2 animate-fade-in">
+              <div className="flex items-start gap-3 text-rose-700 dark:text-rose-400 text-sm font-semibold">
+                <AlertCircle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="font-extrabold text-xs uppercase tracking-wider">Authentication Alert</p>
+                  <p>{errorMessage}</p>
+                </div>
+              </div>
+              {(errorMessage.toLowerCase().includes('not found') || errorMessage.toLowerCase().includes('create')) && (
+                <div className="pt-2 border-t border-rose-200/60 dark:border-rose-500/20 flex justify-end">
+                  <Link
+                    to="/register"
+                    className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>Register New Account</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              )}
             </div>
           )}
 
