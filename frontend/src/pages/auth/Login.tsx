@@ -67,16 +67,25 @@ export const Login: React.FC = () => {
       navigate('/dashboard');
     } catch (err: any) {
       const status = err.response?.status;
-      const detail = err.response?.data?.detail || '';
-      if (status === 404 || detail.toLowerCase().includes('not found')) {
+      const rawDetail = err.response?.data?.detail;
+      let detail = '';
+      if (typeof rawDetail === 'string') {
+        detail = rawDetail;
+      } else if (Array.isArray(rawDetail)) {
+        detail = rawDetail.map((d: any) => d.msg || '').join(', ');
+      }
+
+      const detailLower = detail.toLowerCase();
+
+      if (status === 404 || detailLower.includes('not found') || detailLower.includes('no user')) {
         setErrorType('USER_NOT_FOUND');
-        setErrorMessage('User account not found in Dayflow HRMS.');
-      } else if (status === 401 || detail.toLowerCase().includes('incorrect') || detail.toLowerCase().includes('password')) {
+        setErrorMessage(`Account (${data.email}) not found in Dayflow HRMS. Please register this account first.`);
+      } else if (status === 401 || detailLower.includes('incorrect') || detailLower.includes('password') || detailLower.includes('credentials')) {
         setErrorType('INCORRECT_PASSWORD');
-        setErrorMessage('Incorrect password. Please verify your credentials or reset password.');
+        setErrorMessage('Incorrect password for this email. Please check your password or use Forgot Password.');
       } else {
         setErrorType('GENERIC');
-        setErrorMessage(detail || 'Log in failed. Invalid credentials.');
+        setErrorMessage(detail || `Authentication failed for ${data.email}. Please verify your credentials or register.`);
       }
     } finally {
       setIsLoading(false);
@@ -193,7 +202,7 @@ export const Login: React.FC = () => {
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => handleQuickFill('john@dayflow.com', 'User@123')}
+                onClick={() => handleQuickFill('kumariafprince@gmail.com', 'User@123')}
                 className="py-2 px-3 rounded-xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 hover:border-indigo-500 text-[11px] font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-1.5 shadow-xs transition-all"
               >
                 <UserCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
@@ -201,7 +210,7 @@ export const Login: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => handleQuickFill('hr@dayflow.com', 'HR@123')}
+                onClick={() => handleQuickFill('rahulbhojpur4299@gmail.com', 'HR@123')}
                 className="py-2 px-3 rounded-xl bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800 hover:border-amber-500 text-[11px] font-bold text-slate-800 dark:text-slate-200 flex items-center justify-center gap-1.5 shadow-xs transition-all"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
