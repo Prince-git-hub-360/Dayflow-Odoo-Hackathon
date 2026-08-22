@@ -22,7 +22,7 @@ export const Sidebar: React.FC = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const isEmployee = user?.role === 'EMPLOYEE';
