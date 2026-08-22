@@ -4,6 +4,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 
+// Public Landing Page
+import { LandingPage } from './pages/LandingPage';
+
 // Auth Pages
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
@@ -41,6 +44,9 @@ export const App: React.FC = () => {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
+            {/* Public Landing Page Route */}
+            <Route path="/" element={<LandingPage />} />
+
             {/* Public Auth Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -67,8 +73,8 @@ export const App: React.FC = () => {
               <Route path="/admin/audit-logs" element={<AdminAuditLogs />} />
             </Route>
 
-            {/* Default Catch-all */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* Default Catch-all Redirect */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
