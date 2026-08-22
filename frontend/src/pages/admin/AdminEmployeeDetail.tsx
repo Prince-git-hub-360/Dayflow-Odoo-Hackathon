@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, CalendarDays, FileText, Mail, Phone, MapPin, Trash2, AlertTriangle } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  CalendarDays, 
+  FileText, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Trash2, 
+  AlertTriangle,
+  Edit3,
+  IndianRupee,
+} from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
-import type { Employee, Attendance, LeaveRequest, Payroll } from '../../types';
+import type { Employee, Attendance, LeaveRequest, Payroll, Department } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -20,10 +31,36 @@ export const AdminEmployeeDetail: React.FC = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
-  const { data: employee, isLoading } = useQuery<Employee>({
+  // Edit Employee Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [editFirstName, setEditFirstName] = useState<string>('');
+  const [editLastName, setEditLastName] = useState<string>('');
+  const [editJobTitle, setEditJobTitle] = useState<string>('');
+  const [editDeptId, setEditDeptId] = useState<number | string>('');
+  const [editPhone, setEditPhone] = useState<string>('');
+  const [editAddress, setEditAddress] = useState<string>('');
+  const [editJoiningDate, setEditJoiningDate] = useState<string>('');
+  const [isSavingEdit, setIsSavingEdit] = useState<boolean>(false);
+
+  // Edit Salary Modal State
+  const [isSalaryModalOpen, setIsSalaryModalOpen] = useState<boolean>(false);
+  const [basicSalary, setBasicSalary] = useState<number | string>(0);
+  const [allowances, setAllowances] = useState<number | string>(0);
+  const [deductions, setDeductions] = useState<number | string>(0);
+  const [isSavingSalary, setIsSavingSalary] = useState<boolean>(false);
+
+  const { data: employee, isLoading, refetch: refetchEmployee } = useQuery<Employee>({
     queryKey: ['adminEmployeeDetail', id],
     queryFn: async () => {
       const res = await api.get(`/employees/${id}`);
+      return res.data;
+    },
+  });
+
+  const { data: departments } = useQuery<Department[]>({
+    queryKey: ['adminDepartmentsList'],
+    queryFn: async () => {
+      const res = await api.get('/employees/departments/all');
       return res.data;
     },
   });
@@ -44,13 +81,76 @@ export const AdminEmployeeDetail: React.FC = () => {
     },
   });
 
-  const { data: payroll } = useQuery<Payroll>({
+  const { data: payroll, refetch: refetchPayroll } = useQuery<Payroll>({
     queryKey: ['adminEmployeePayroll', id],
     queryFn: async () => {
       const res = await api.get(`/payroll/${id}`);
       return res.data;
     },
   });
+
+  const openEditModal = () => {
+    if (!employee) return;
+    setEditFirstName(employee.first_name || '');
+    setEditLastName(employee.last_name || '');
+    setEditJobTitle(employee.job_title || '');
+    setEditDeptId(employee.department_id || '');
+    setEditPhone(employee.phone || '');
+    setEditAddress(employee.address || '');
+    setEditJoiningDate(employee.joining_date || '');
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!id) return;
+    setIsSavingEdit(true);
+    try {
+      await api.patch(`/employees/${id}`, {
+        first_name: editFirstName,
+        last_name: editLastName,
+        job_title: editJobTitle,
+        department_id: editDeptId ? Number(editDeptId) : null,
+        phone: editPhone,
+        address: editAddress,
+        joining_date: editJoiningDate,
+      });
+      setIsEditModalOpen(false);
+      refetchEmployee();
+      queryClient.invalidateQueries({ queryKey: ['adminEmployeesList'] });
+    } catch (err: any) {
+      alert(err.response?.data?.detail || 'Failed to update employee details.');
+    } finally {
+      setIsSavingEdit(false);
+    }
+  };
+
+  const openSalaryModal = () => {
+    setBasicSalary(payroll?.basic_salary || 50000);
+    setAllowances(payroll?.allowances || 5000);
+    setDeductions(payroll?.deductions || 2000);
+    setIsSalaryModalOpen(true);
+  };
+
+  const handleSaveSalary = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!id) return;
+    setIsSavingSalary(true);
+    try {
+      await api.patch(`/payroll/${id}`, {
+        basic_salary: Number(basicSalary),
+        allowances: Number(allowances),
+        deductions: Number(deductions),
+      });
+      setIsSalaryModalOpen(false);
+      refetchPayroll();
+      queryClient.invalidateQueries({ queryKey: ['adminAnalyticsDashboard'] });
+    } catch (err: any) {
+      alert(err.response?.data?.detail || 'Failed to update payroll structure.');
+    } finally {
+      setIsSavingSalary(false);
+    }
+  };
 
   const handleDelete = async () => {
     if (!id) return;
@@ -73,7 +173,7 @@ export const AdminEmployeeDetail: React.FC = () => {
       : employee?.user?.role === 'EMPLOYEE' && employee?.user_id !== user?.id;
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in pb-12">
       <div className="flex items-center gap-4">
         <Link to="/admin/employees">
           <Button variant="ghost" size="sm" leftIcon={<ArrowLeft className="w-4 h-4" />}>
@@ -86,10 +186,10 @@ export const AdminEmployeeDetail: React.FC = () => {
         <LoadingSpinner />
       ) : employee ? (
         <div className="space-y-8">
-          <Card className="p-8 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
+          <Card className="p-8 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-md">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex items-center gap-5">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-2xl font-extrabold text-white">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-2xl font-extrabold text-white shadow-lg">
                   {employee.first_name[0]}
                 </div>
                 <div>
@@ -99,7 +199,7 @@ export const AdminEmployeeDetail: React.FC = () => {
                     </h1>
                     <Badge variant="info">{employee.job_title}</Badge>
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 flex items-center gap-4 font-medium">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 flex flex-wrap items-center gap-4 font-medium">
                     <span>ID: {employee.user?.employee_id}</span>
                     <span>Department: {employee.department?.name || 'Unassigned'}</span>
                     <span>Joined: {employee.joining_date}</span>
@@ -107,10 +207,14 @@ export const AdminEmployeeDetail: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <Badge variant={employee.user?.role === 'ADMIN' ? 'danger' : employee.user?.role === 'HR' ? 'warning' : 'neutral'} size="md">
                   Role: {employee.user?.role || 'EMPLOYEE'}
                 </Badge>
+
+                <Button variant="outline" size="sm" onClick={openEditModal} leftIcon={<Edit3 className="w-4 h-4" />}>
+                  Edit Profile
+                </Button>
 
                 {canDelete && (
                   <Button
@@ -126,46 +230,15 @@ export const AdminEmployeeDetail: React.FC = () => {
             </div>
           </Card>
 
-          <Modal
-            isOpen={isDeleteModalOpen}
-            onClose={() => setIsDeleteModalOpen(false)}
-            title="Confirm Employee Account Termination"
-          >
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 flex items-center gap-3 text-rose-800 dark:text-rose-400 text-xs font-semibold">
-                <AlertTriangle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" />
-                <span>
-                  Warning: Terminating <strong>{employee.first_name} {employee.last_name}</strong> will remove their user account, attendance logs, and leave records from Dayflow HRMS.
-                </span>
-              </div>
-
-              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-                Are you sure you want to permanently delete this account? This action cannot be reversed.
-              </p>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
-                <Button type="button" variant="ghost" onClick={() => setIsDeleteModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button
-                  type="button"
-                  variant="danger"
-                  isLoading={isDeleting}
-                  onClick={handleDelete}
-                  leftIcon={<Trash2 className="w-4 h-4" />}
-                >
-                  Permanently Terminate Account
-                </Button>
-              </div>
-            </div>
-          </Modal>
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="space-y-6">
               <Card>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
-                  Contact Information
-                </h3>
+                <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider">
+                    Contact Information
+                  </h3>
+                  <button onClick={openEditModal} className="text-xs font-bold text-indigo-600 hover:underline">Edit</button>
+                </div>
                 <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300 font-medium">
                   <div className="flex items-center gap-3">
                     <Mail className="w-4 h-4 text-slate-400" />
@@ -183,9 +256,12 @@ export const AdminEmployeeDetail: React.FC = () => {
               </Card>
 
               <Card>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
-                  Payroll Structure
-                </h3>
+                <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                    <IndianRupee className="w-4 h-4 text-emerald-600" /> Payroll Structure
+                  </h3>
+                  <button onClick={openSalaryModal} className="text-xs font-bold text-indigo-600 hover:underline">Edit</button>
+                </div>
                 {payroll ? (
                   <div className="space-y-3 text-xs">
                     <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
@@ -265,7 +341,6 @@ export const AdminEmployeeDetail: React.FC = () => {
                         <th className="py-2.5 px-4">Type</th>
                         <th className="py-2.5 px-4">Dates</th>
                         <th className="py-2.5 px-4">Status</th>
-                        <th className="py-2.5 px-4">Comment</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
@@ -278,7 +353,6 @@ export const AdminEmployeeDetail: React.FC = () => {
                               {leave.status}
                             </Badge>
                           </td>
-                          <td className="py-3 px-4 text-slate-600 dark:text-slate-400 truncate max-w-xs font-medium">{leave.admin_comment || '-'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -291,6 +365,55 @@ export const AdminEmployeeDetail: React.FC = () => {
       ) : (
         <p className="text-slate-500 font-medium">Employee not found.</p>
       )}
+
+      {/* Edit Profile Modal */}
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit Employee">
+        <form onSubmit={handleSaveEdit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <input type="text" placeholder="First Name" value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} className="w-full border rounded-lg p-2" required />
+            <input type="text" placeholder="Last Name" value={editLastName} onChange={(e) => setEditLastName(e.target.value)} className="w-full border rounded-lg p-2" required />
+          </div>
+          <input type="text" placeholder="Job Title" value={editJobTitle} onChange={(e) => setEditJobTitle(e.target.value)} className="w-full border rounded-lg p-2" />
+          <select value={editDeptId} onChange={(e) => setEditDeptId(e.target.value)} className="w-full border rounded-lg p-2">
+             <option value="">Select Department</option>
+             {departments?.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+          </select>
+          <input type="text" placeholder="Phone" value={editPhone} onChange={(e) => setEditPhone(e.target.value)} className="w-full border rounded-lg p-2" />
+          <textarea placeholder="Address" value={editAddress} onChange={(e) => setEditAddress(e.target.value)} className="w-full border rounded-lg p-2" />
+          <Button type="submit" isLoading={isSavingEdit}>Save Changes</Button>
+        </form>
+      </Modal>
+
+      {/* Edit Salary Modal */}
+      <Modal isOpen={isSalaryModalOpen} onClose={() => setIsSalaryModalOpen(false)} title="Update Salary">
+        <form onSubmit={handleSaveSalary} className="space-y-4">
+          <input type="number" placeholder="Basic Salary" value={basicSalary} onChange={(e) => setBasicSalary(e.target.value)} className="w-full border rounded-lg p-2" />
+          <input type="number" placeholder="Allowances" value={allowances} onChange={(e) => setAllowances(e.target.value)} className="w-full border rounded-lg p-2" />
+          <input type="number" placeholder="Deductions" value={deductions} onChange={(e) => setDeductions(e.target.value)} className="w-full border rounded-lg p-2" />
+          <Button type="submit" isLoading={isSavingSalary}>Update Payroll</Button>
+        </form>
+      </Modal>
+
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="Confirm Employee Account Termination"
+      >
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 flex items-center gap-3 text-rose-800 dark:text-rose-400 text-xs font-semibold">
+            <AlertTriangle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" />
+            <span>
+              Warning: Terminating <strong>{employee?.first_name} {employee?.last_name}</strong> will remove their user account, attendance logs, and leave records from Dayflow HRMS.
+            </span>
+          </div>
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <Button type="button" variant="ghost" onClick={() => setIsDeleteModalOpen(false)}>Cancel</Button>
+            <Button type="button" variant="danger" isLoading={isDeleting} onClick={handleDelete} leftIcon={<Trash2 className="w-4 h-4" />}>
+              Permanently Terminate Account
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
