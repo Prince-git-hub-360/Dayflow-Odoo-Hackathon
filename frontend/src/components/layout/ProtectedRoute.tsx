@@ -15,7 +15,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] flex items-center justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -30,7 +30,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) 
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-950">
+    <div className="flex min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-200">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <Header />
