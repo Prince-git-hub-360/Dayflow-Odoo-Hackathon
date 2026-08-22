@@ -55,16 +55,16 @@ export const AdminPayroll: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-extrabold text-white flex items-center gap-2">
-          <DollarSign className="w-6 h-6 text-indigo-400" /> Organization Payroll Control
+        <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+          <DollarSign className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Organization Payroll Control
         </h1>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
           Set and update basic salaries, allowances, and tax deductions across all employees.
         </p>
       </div>
 
       {feedback && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 text-emerald-300 text-sm">
+        <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 flex items-center gap-3 text-emerald-800 dark:text-emerald-300 text-sm font-semibold">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{feedback}</span>
         </div>
@@ -77,7 +77,7 @@ export const AdminPayroll: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-900/60 border-b border-slate-800 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <tr className="bg-slate-100 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   <th className="py-3.5 px-6">Employee</th>
                   <th className="py-3.5 px-6">Basic Salary</th>
                   <th className="py-3.5 px-6">Allowances</th>
@@ -86,25 +86,25 @@ export const AdminPayroll: React.FC = () => {
                   <th className="py-3.5 px-6 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-sm">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 text-sm">
                 {payrolls?.map((p) => (
-                  <tr key={p.id} className="hover:bg-slate-900/40 transition-colors">
-                    <td className="py-4 px-6 font-bold text-slate-200">
+                  <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                    <td className="py-4 px-6 font-bold text-slate-900 dark:text-slate-200">
                       {p.employee?.first_name} {p.employee?.last_name}
-                      <span className="block text-xs font-normal text-slate-400">
+                      <span className="block text-xs font-medium text-slate-600 dark:text-slate-400">
                         {p.employee?.job_title}
                       </span>
                     </td>
-                    <td className="py-4 px-6 font-mono text-slate-300">
+                    <td className="py-4 px-6 font-mono font-semibold text-slate-800 dark:text-slate-300">
                       ${Number(p.basic_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="py-4 px-6 font-mono text-emerald-400">
+                    <td className="py-4 px-6 font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
                       +${Number(p.allowances).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="py-4 px-6 font-mono text-rose-400">
+                    <td className="py-4 px-6 font-mono font-extrabold text-rose-600 dark:text-rose-400">
                       -${Number(p.deductions).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="py-4 px-6 font-mono font-bold text-white">
+                    <td className="py-4 px-6 font-mono font-extrabold text-slate-900 dark:text-white">
                       ${Number(p.net_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-4 px-6 text-right">
@@ -132,17 +132,17 @@ export const AdminPayroll: React.FC = () => {
       >
         {selectedPayroll && (
           <form onSubmit={handleUpdatePayroll} className="space-y-4">
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300">
-              <p className="font-bold text-slate-200">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+              <p className="font-bold text-slate-900 dark:text-slate-200">
                 Employee: {selectedPayroll.employee?.first_name} {selectedPayroll.employee?.last_name}
               </p>
-              <p className="text-slate-400">
+              <p className="text-slate-600 dark:text-slate-400 font-medium">
                 Department: {selectedPayroll.employee?.department?.name || 'Engineering'}
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
                 Basic Salary ($)
               </label>
               <input
@@ -152,12 +152,12 @@ export const AdminPayroll: React.FC = () => {
                 required
                 min="0"
                 step="500"
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
                 Allowances ($)
               </label>
               <input
@@ -166,12 +166,12 @@ export const AdminPayroll: React.FC = () => {
                 onChange={(e) => setAllowances(Number(e.target.value))}
                 min="0"
                 step="100"
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
                 Deductions ($)
               </label>
               <input
@@ -180,18 +180,18 @@ export const AdminPayroll: React.FC = () => {
                 onChange={(e) => setDeductions(Number(e.target.value))}
                 min="0"
                 step="100"
-                className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 font-medium"
               />
             </div>
 
-            <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex justify-between items-center text-xs">
-              <span className="font-semibold text-slate-300">Calculated Net Salary:</span>
-              <span className="text-base font-extrabold text-indigo-300">
+            <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 flex justify-between items-center text-xs">
+              <span className="font-bold text-slate-800 dark:text-slate-300">Calculated Net Salary:</span>
+              <span className="text-base font-extrabold text-indigo-700 dark:text-indigo-300">
                 ${(basicSalary + allowances - deductions).toLocaleString(undefined, { minimumFractionDigits: 2 })}
               </span>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
               <Button variant="ghost" type="button" onClick={() => setSelectedPayroll(null)}>
                 Cancel
               </Button>

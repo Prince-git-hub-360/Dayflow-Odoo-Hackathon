@@ -28,13 +28,13 @@ export const Button: React.FC<ButtonProps> = ({
     primary:
       'bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-lg shadow-indigo-500/25 focus:ring-indigo-500',
     secondary:
-      'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 focus:ring-slate-500',
+      'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700/60 focus:ring-slate-500',
     danger:
       'bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white shadow-lg shadow-rose-500/25 focus:ring-rose-500',
     outline:
-      'border border-indigo-500/40 text-indigo-400 hover:bg-indigo-500/10 focus:ring-indigo-500',
+      'border border-indigo-500/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 focus:ring-indigo-500',
     ghost:
-      'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 focus:ring-slate-500',
+      'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 focus:ring-slate-500',
   };
 
   const sizes = {

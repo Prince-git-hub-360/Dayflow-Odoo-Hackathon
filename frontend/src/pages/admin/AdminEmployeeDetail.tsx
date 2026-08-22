@@ -58,20 +58,20 @@ export const AdminEmployeeDetail: React.FC = () => {
         <LoadingSpinner />
       ) : employee ? (
         <div className="space-y-8">
-          <Card className="p-8 border border-slate-800 bg-slate-900/60">
+          <Card className="p-8 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex items-center gap-5">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 border-2 border-slate-700 flex items-center justify-center text-2xl font-extrabold text-white">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 border-2 border-slate-200 dark:border-slate-700 flex items-center justify-center text-2xl font-extrabold text-white">
                   {employee.first_name[0]}
                 </div>
                 <div>
                   <div className="flex items-center gap-3">
-                    <h1 className="text-2xl font-extrabold text-white">
+                    <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
                       {employee.first_name} {employee.last_name}
                     </h1>
                     <Badge variant="info">{employee.job_title}</Badge>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1 flex items-center gap-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 flex items-center gap-4 font-medium">
                     <span>ID: {employee.user?.employee_id}</span>
                     <span>Department: {employee.department?.name || 'Unassigned'}</span>
                     <span>Joined: {employee.joining_date}</span>
@@ -88,65 +88,65 @@ export const AdminEmployeeDetail: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="space-y-6">
               <Card>
-                <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-800">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
                   Contact Information
                 </h3>
-                <div className="space-y-3 text-xs text-slate-300">
+                <div className="space-y-3 text-xs text-slate-700 dark:text-slate-300 font-medium">
                   <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-slate-500" />
+                    <Mail className="w-4 h-4 text-slate-400" />
                     <span>{employee.user?.email}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-slate-500" />
+                    <Phone className="w-4 h-4 text-slate-400" />
                     <span>{employee.phone || 'No phone provided'}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <MapPin className="w-4 h-4 text-slate-500" />
+                    <MapPin className="w-4 h-4 text-slate-400" />
                     <span>{employee.address || 'No address provided'}</span>
                   </div>
                 </div>
               </Card>
 
               <Card>
-                <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-800">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
                   Payroll Structure
                 </h3>
                 {payroll ? (
                   <div className="space-y-3 text-xs">
-                    <div className="flex justify-between py-1 border-b border-slate-800/60">
-                      <span className="text-slate-400">Basic Salary</span>
-                      <span className="font-semibold text-slate-200">${Number(payroll.basic_salary).toLocaleString()}</span>
+                    <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
+                      <span className="text-slate-600 dark:text-slate-400">Basic Salary</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-200">${Number(payroll.basic_salary).toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-800/60">
-                      <span className="text-slate-400">Allowances</span>
-                      <span className="font-semibold text-emerald-400">+${Number(payroll.allowances).toLocaleString()}</span>
+                    <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
+                      <span className="text-slate-600 dark:text-slate-400">Allowances</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">+${Number(payroll.allowances).toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-slate-800/60">
-                      <span className="text-slate-400">Deductions</span>
-                      <span className="font-semibold text-rose-400">-${Number(payroll.deductions).toLocaleString()}</span>
+                    <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
+                      <span className="text-slate-600 dark:text-slate-400">Deductions</span>
+                      <span className="font-bold text-rose-600 dark:text-rose-400">-${Number(payroll.deductions).toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between pt-2 text-sm font-bold">
-                      <span className="text-indigo-400">Net Take-Home</span>
-                      <span className="text-white">${Number(payroll.net_salary).toLocaleString()}</span>
+                    <div className="flex justify-between pt-2 text-sm font-extrabold">
+                      <span className="text-indigo-600 dark:text-indigo-400">Net Take-Home</span>
+                      <span className="text-slate-900 dark:text-white">${Number(payroll.net_salary).toLocaleString()}</span>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-xs text-slate-500">No payroll record found.</p>
+                  <p className="text-xs text-slate-500 font-medium">No payroll record found.</p>
                 )}
               </Card>
             </div>
 
             <div className="lg:col-span-2 space-y-6">
               <Card className="p-0 overflow-hidden">
-                <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-                  <h3 className="font-bold text-slate-200 text-sm flex items-center gap-2">
-                    <CalendarDays className="w-4 h-4 text-indigo-400" /> Recent Attendance History
+                <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                  <h3 className="font-bold text-slate-900 dark:text-slate-200 text-sm flex items-center gap-2">
+                    <CalendarDays className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Recent Attendance History
                   </h3>
-                  <span className="text-xs text-slate-500">{attendanceList?.length || 0} Records</span>
+                  <span className="text-xs text-slate-500 font-bold">{attendanceList?.length || 0} Records</span>
                 </div>
                 <div className="max-h-60 overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-900/60 text-slate-400 uppercase font-semibold">
+                    <thead className="bg-slate-100 dark:bg-slate-900/60 text-slate-700 dark:text-slate-400 uppercase font-bold">
                       <tr>
                         <th className="py-2.5 px-4">Date</th>
                         <th className="py-2.5 px-4">Check In</th>
@@ -154,14 +154,14 @@ export const AdminEmployeeDetail: React.FC = () => {
                         <th className="py-2.5 px-4">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/60">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
                       {attendanceList?.slice(0, 7).map((att) => (
-                        <tr key={att.id} className="hover:bg-slate-900/30">
-                          <td className="py-3 px-4 font-mono text-slate-300">{att.date}</td>
-                          <td className="py-3 px-4 text-slate-400">
+                        <tr key={att.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/30">
+                          <td className="py-3 px-4 font-mono font-bold text-slate-900 dark:text-slate-300">{att.date}</td>
+                          <td className="py-3 px-4 text-slate-700 dark:text-slate-400 font-medium">
                             {att.check_in ? new Date(att.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}
                           </td>
-                          <td className="py-3 px-4 text-slate-400">
+                          <td className="py-3 px-4 text-slate-700 dark:text-slate-400 font-medium">
                             {att.check_out ? new Date(att.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}
                           </td>
                           <td className="py-3 px-4">
@@ -177,15 +177,15 @@ export const AdminEmployeeDetail: React.FC = () => {
               </Card>
 
               <Card className="p-0 overflow-hidden">
-                <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-                  <h3 className="font-bold text-slate-200 text-sm flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-indigo-400" /> Leave Applications
+                <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                  <h3 className="font-bold text-slate-900 dark:text-slate-200 text-sm flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Leave Applications
                   </h3>
-                  <span className="text-xs text-slate-500">{leavesList?.length || 0} Applications</span>
+                  <span className="text-xs text-slate-500 font-bold">{leavesList?.length || 0} Applications</span>
                 </div>
                 <div className="max-h-60 overflow-y-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-900/60 text-slate-400 uppercase font-semibold">
+                    <thead className="bg-slate-100 dark:bg-slate-900/60 text-slate-700 dark:text-slate-400 uppercase font-bold">
                       <tr>
                         <th className="py-2.5 px-4">Type</th>
                         <th className="py-2.5 px-4">Dates</th>
@@ -193,17 +193,17 @@ export const AdminEmployeeDetail: React.FC = () => {
                         <th className="py-2.5 px-4">Comment</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/60">
+                    <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
                       {leavesList?.map((leave) => (
-                        <tr key={leave.id} className="hover:bg-slate-900/30">
-                          <td className="py-3 px-4 font-semibold text-slate-300">{leave.leave_type}</td>
-                          <td className="py-3 px-4 font-mono text-slate-400">{leave.start_date} → {leave.end_date}</td>
+                        <tr key={leave.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/30">
+                          <td className="py-3 px-4 font-bold text-slate-900 dark:text-slate-300">{leave.leave_type}</td>
+                          <td className="py-3 px-4 font-mono font-semibold text-slate-700 dark:text-slate-400">{leave.start_date} → {leave.end_date}</td>
                           <td className="py-3 px-4">
                             <Badge variant={leave.status === 'APPROVED' ? 'success' : leave.status === 'REJECTED' ? 'danger' : 'warning'}>
                               {leave.status}
                             </Badge>
                           </td>
-                          <td className="py-3 px-4 text-slate-400 truncate max-w-xs">{leave.admin_comment || '-'}</td>
+                          <td className="py-3 px-4 text-slate-600 dark:text-slate-400 truncate max-w-xs font-medium">{leave.admin_comment || '-'}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -214,7 +214,7 @@ export const AdminEmployeeDetail: React.FC = () => {
           </div>
         </div>
       ) : (
-        <p className="text-slate-400">Employee not found.</p>
+        <p className="text-slate-500 font-medium">Employee not found.</p>
       )}
     </div>
   );

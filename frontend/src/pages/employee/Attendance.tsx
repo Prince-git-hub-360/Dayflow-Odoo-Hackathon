@@ -66,10 +66,10 @@ export const EmployeeAttendance: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white flex items-center gap-2">
-            <CalendarDays className="w-6 h-6 text-indigo-400" /> Daily Attendance Log
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+            <CalendarDays className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Daily Attendance Log
           </h1>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
             Log your daily working hours and review your monthly attendance statistics.
           </p>
         </div>
@@ -88,7 +88,7 @@ export const EmployeeAttendance: React.FC = () => {
       </div>
 
       {feedback && (
-        <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center gap-3 text-indigo-300 text-sm">
+        <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 flex items-center gap-3 text-indigo-800 dark:text-indigo-300 text-sm font-semibold">
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span>{feedback}</span>
         </div>
@@ -96,41 +96,41 @@ export const EmployeeAttendance: React.FC = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card className="p-4 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase">Rate</p>
-          <h4 className="text-2xl font-bold text-emerald-400 mt-1">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Rate</p>
+          <h4 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
             {summary?.attendance_rate || 0}%
           </h4>
         </Card>
         <Card className="p-4 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase">Present</p>
-          <h4 className="text-2xl font-bold text-indigo-400 mt-1">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Present</p>
+          <h4 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">
             {summary?.present_days || 0}
           </h4>
         </Card>
         <Card className="p-4 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase">Absent</p>
-          <h4 className="text-2xl font-bold text-rose-400 mt-1">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Absent</p>
+          <h4 className="text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1">
             {summary?.absent_days || 0}
           </h4>
         </Card>
         <Card className="p-4 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase">Half Day</p>
-          <h4 className="text-2xl font-bold text-amber-400 mt-1">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Half Day</p>
+          <h4 className="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">
             {summary?.half_days || 0}
           </h4>
         </Card>
         <Card className="p-4 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase">On Leave</p>
-          <h4 className="text-2xl font-bold text-sky-400 mt-1">
+          <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">On Leave</p>
+          <h4 className="text-2xl font-bold text-sky-600 dark:text-sky-400 mt-1">
             {summary?.leave_days || 0}
           </h4>
         </Card>
       </div>
 
       <Card className="p-0 overflow-hidden">
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
-          <h3 className="font-bold text-slate-100 text-base">30-Day Attendance Record</h3>
-          <span className="text-xs text-slate-400">Total Records: {attendanceList?.length || 0}</span>
+        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base">30-Day Attendance Record</h3>
+          <span className="text-xs text-slate-600 dark:text-slate-400 font-bold">Total Records: {attendanceList?.length || 0}</span>
         </div>
 
         {isLoading ? (
@@ -139,7 +139,7 @@ export const EmployeeAttendance: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-900/60 border-b border-slate-800 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                <tr className="bg-slate-100 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   <th className="py-3.5 px-6">Date</th>
                   <th className="py-3.5 px-6">Check In (UTC)</th>
                   <th className="py-3.5 px-6">Check Out (UTC)</th>
@@ -147,7 +147,7 @@ export const EmployeeAttendance: React.FC = () => {
                   <th className="py-3.5 px-6">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-sm">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 text-sm">
                 {attendanceList?.map((rec) => {
                   let hours = '-';
                   if (rec.check_in && rec.check_out) {
@@ -156,9 +156,9 @@ export const EmployeeAttendance: React.FC = () => {
                     hours = `${(diff / (1000 * 60 * 60)).toFixed(1)} hrs`;
                   }
                   return (
-                    <tr key={rec.id} className="hover:bg-slate-900/40 transition-colors">
-                      <td className="py-4 px-6 font-mono font-medium text-slate-200">{rec.date}</td>
-                      <td className="py-4 px-6 text-slate-300">
+                    <tr key={rec.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                      <td className="py-4 px-6 font-mono font-bold text-slate-900 dark:text-slate-200">{rec.date}</td>
+                      <td className="py-4 px-6 text-slate-800 dark:text-slate-300 font-medium">
                         {rec.check_in
                           ? new Date(rec.check_in).toLocaleTimeString([], {
                               hour: '2-digit',
@@ -166,7 +166,7 @@ export const EmployeeAttendance: React.FC = () => {
                             })
                           : '--:--'}
                       </td>
-                      <td className="py-4 px-6 text-slate-300">
+                      <td className="py-4 px-6 text-slate-800 dark:text-slate-300 font-medium">
                         {rec.check_out
                           ? new Date(rec.check_out).toLocaleTimeString([], {
                               hour: '2-digit',
@@ -174,7 +174,7 @@ export const EmployeeAttendance: React.FC = () => {
                             })
                           : '--:--'}
                       </td>
-                      <td className="py-4 px-6 text-slate-400 font-mono text-xs">{hours}</td>
+                      <td className="py-4 px-6 text-slate-600 dark:text-slate-400 font-mono text-xs font-medium">{hours}</td>
                       <td className="py-4 px-6">
                         <Badge
                           variant={
