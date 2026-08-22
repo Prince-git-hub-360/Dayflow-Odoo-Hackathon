@@ -35,7 +35,7 @@ export const FinalCTA: React.FC = () => {
               onClick={() => navigate('/login')}
               className="w-full sm:w-auto px-8"
             >
-              Sign In
+              Log in
             </Button>
           </div>
         </div>

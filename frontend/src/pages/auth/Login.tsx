@@ -87,7 +87,7 @@ export const Login: React.FC = () => {
           </div>
         </Link>
         <h2 className="text-center text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Sign In to Dayflow
+          Log in to Dayflow
         </h2>
         <p className="mt-2 text-center text-sm font-medium text-slate-600 dark:text-slate-400">
           Access your employee portal or administrative dashboard
@@ -155,7 +155,7 @@ export const Login: React.FC = () => {
               className="w-full py-3"
               rightIcon={<ArrowRight className="w-4 h-4" />}
             >
-              Sign In
+              Log in
             </Button>
           </form>
 

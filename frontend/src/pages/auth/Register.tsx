@@ -296,7 +296,7 @@ export const Register: React.FC = () => {
           <div className="mt-5 text-center text-xs text-slate-500 font-medium">
             Already registered?{' '}
             <Link to="/login" className="font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
-              Sign In to Your Account
+              Log in to Your Account
             </Link>
           </div>
         </div>

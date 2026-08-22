@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { DollarSign, ShieldAlert, Award, TrendingDown, Wallet, Calendar } from 'lucide-react';
+import { IndianRupee, ShieldAlert, Award, TrendingDown, Wallet, Calendar } from 'lucide-react';
 import { api } from '../../services/api';
 import type { Payroll } from '../../types';
 import { Card } from '../../components/ui/Card';
@@ -20,7 +20,7 @@ export const EmployeePayroll: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
       <div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-          <DollarSign className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Payroll & Salary Details
+          <IndianRupee className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Payroll & Salary Details
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
           Official read-only view of your current salary structure and payslip breakdown.
@@ -46,7 +46,7 @@ export const EmployeePayroll: React.FC = () => {
                   Total Monthly Net Take-Home
                 </p>
                 <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
-                  ${Number(payroll.net_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  ₹{Number(payroll.net_salary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </h2>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 flex items-center gap-1.5 font-medium">
                   <Calendar className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" /> Effective Date: {payroll.effective_from}
@@ -68,7 +68,7 @@ export const EmployeePayroll: React.FC = () => {
                 <div>
                   <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Basic Salary</p>
                   <h4 className="text-xl font-extrabold text-slate-900 dark:text-slate-100">
-                    ${Number(payroll.basic_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    ₹{Number(payroll.basic_salary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </h4>
                 </div>
               </div>
@@ -83,11 +83,11 @@ export const EmployeePayroll: React.FC = () => {
                 <div>
                   <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Allowances</p>
                   <h4 className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">
-                    +${Number(payroll.allowances).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    +₹{Number(payroll.allowances).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </h4>
                 </div>
               </div>
-              <p className="text-xs text-slate-500 font-medium">Medical, housing & travel perks</p>
+              <p className="text-xs text-slate-500 font-medium">Medical, HRA & conveyance perks</p>
             </Card>
 
             <Card className="p-6">
@@ -98,17 +98,17 @@ export const EmployeePayroll: React.FC = () => {
                 <div>
                   <p className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase">Deductions</p>
                   <h4 className="text-xl font-extrabold text-rose-600 dark:text-rose-400">
-                    -${Number(payroll.deductions).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    -₹{Number(payroll.deductions).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                   </h4>
                 </div>
               </div>
-              <p className="text-xs text-slate-500 font-medium">Taxes, health insurance & retirement</p>
+              <p className="text-xs text-slate-500 font-medium">Taxes, Provident Fund (PF) & health insurance</p>
             </Card>
           </div>
         </div>
       ) : (
         <Card className="text-center py-12">
-          <p className="text-slate-500 text-sm font-medium">No payroll record found. Please contact HR.</p>
+          <p className="text-slate-500 text-sm font-medium">Payroll information is not available yet. Please contact HR.</p>
         </Card>
       )}
     </div>

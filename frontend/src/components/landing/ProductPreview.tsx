@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Clock,
   FileText,
-  DollarSign,
+  IndianRupee,
   Users,
   Search,
   Plus,
@@ -200,15 +200,15 @@ export const ProductPreview: React.FC = () => {
                     <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
                       Payroll Take-Home Summary
                     </span>
-                    <DollarSign className="w-4 h-4 text-emerald-400" />
+                    <IndianRupee className="w-4 h-4 text-emerald-400" />
                   </div>
 
                   <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                    <p className="text-[10px] uppercase text-purple-300 font-bold">October Estimated Net Pay</p>
-                    <p className="text-2xl font-extrabold text-white">$6,450.75</p>
+                    <p className="text-[10px] uppercase text-purple-300 font-bold">Monthly Estimated Net Pay</p>
+                    <p className="text-2xl font-extrabold text-white">₹70,833.00</p>
                     <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1">
-                      <span>Gross Pay: $8,200.00</span>
-                      <span>Deductions: $1,749.25</span>
+                      <span>Gross CTC: ₹85,000.00</span>
+                      <span>Deductions: ₹14,167.00</span>
                     </div>
                   </div>
 
@@ -268,7 +268,7 @@ export const ProductPreview: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
               <div>
                 <h3 className="text-xl font-extrabold tracking-tight">
-                  Dayflow HRMS Dashboard | Good Morning, Sarah Jenkins
+                  Dayflow HRMS Dashboard | Good Morning, HR Manager
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                   System Overview • Organization Live Stats
@@ -312,7 +312,7 @@ export const ProductPreview: React.FC = () => {
                       role: 'HR Manager',
                       status: 'ACTIVE',
                       dept: 'HR',
-                      loc: 'San Francisco',
+                      loc: 'Bengaluru',
                       img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
                     },
                     {
@@ -320,7 +320,7 @@ export const ProductPreview: React.FC = () => {
                       role: 'Senior Developer',
                       status: 'REMOTE',
                       dept: 'Engineering',
-                      loc: 'Seattle',
+                      loc: 'Hyderabad',
                       img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
                     },
                     {
@@ -328,7 +328,7 @@ export const ProductPreview: React.FC = () => {
                       role: 'Product Designer',
                       status: 'ACTIVE',
                       dept: 'Design',
-                      loc: 'London',
+                      loc: 'Pune',
                       img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
                     },
                     {
@@ -336,7 +336,7 @@ export const ProductPreview: React.FC = () => {
                       role: 'Marketing Lead',
                       status: 'ACTIVE',
                       dept: 'Marketing',
-                      loc: 'Boston',
+                      loc: 'Mumbai',
                       img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
                     },
                   ].map((emp, idx) => (

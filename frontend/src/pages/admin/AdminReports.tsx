@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { BarChart3, TrendingUp, Users, PieChart as PieChartIcon, DollarSign } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, PieChart as PieChartIcon, IndianRupee } from 'lucide-react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -171,31 +171,31 @@ export const AdminReports: React.FC = () => {
           {/* Bottom Row: Payroll Overview Cards */}
           <Card className="p-6">
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-6">
-              <DollarSign className="w-5 h-5 text-amber-600 dark:text-amber-400" /> Organization Monthly Payroll Summary
+              <IndianRupee className="w-5 h-5 text-amber-600 dark:text-amber-400" /> Organization Monthly Payroll Summary
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Total Basic Salary</p>
                 <h4 className="text-xl font-bold text-slate-900 dark:text-slate-100 mt-1">
-                  ${analytics.payroll_overview.total_basic.toLocaleString()}
+                  ₹{analytics.payroll_overview.total_basic.toLocaleString('en-IN')}
                 </h4>
               </div>
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Total Allowances</p>
                 <h4 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
-                  +${analytics.payroll_overview.total_allowances.toLocaleString()}
+                  +₹{analytics.payroll_overview.total_allowances.toLocaleString('en-IN')}
                 </h4>
               </div>
               <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Total Deductions</p>
                 <h4 className="text-xl font-bold text-rose-600 dark:text-rose-400 mt-1">
-                  -${analytics.payroll_overview.total_deductions.toLocaleString()}
+                  -₹{analytics.payroll_overview.total_deductions.toLocaleString('en-IN')}
                 </h4>
               </div>
               <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30">
                 <p className="text-xs text-indigo-700 dark:text-indigo-300 font-semibold uppercase">Total Net Disbursement</p>
                 <h4 className="text-xl font-extrabold text-indigo-950 dark:text-white mt-1">
-                  ${analytics.payroll_overview.total_net.toLocaleString()}
+                  ₹{analytics.payroll_overview.total_net.toLocaleString('en-IN')}
                 </h4>
               </div>
             </div>

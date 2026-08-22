@@ -74,17 +74,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
           <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
             <li>
               <Link to="/login" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                Employee Portal Sign In
+                Employee Portal Log in
               </Link>
             </li>
             <li>
               <Link to="/login" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                HR Manager Sign In
+                HR Manager Log in
               </Link>
             </li>
             <li>
               <Link to="/login" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                System Admin Sign In
+                System Admin Log in
               </Link>
             </li>
           </ul>
@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateSection }) => {
           <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
             <li>
               <Link to="/login" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                Sign In
+                Log in
               </Link>
             </li>
             <li>

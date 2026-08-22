@@ -115,19 +115,19 @@ export const AdminEmployeeDetail: React.FC = () => {
                   <div className="space-y-3 text-xs">
                     <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
                       <span className="text-slate-600 dark:text-slate-400">Basic Salary</span>
-                      <span className="font-bold text-slate-900 dark:text-slate-200">${Number(payroll.basic_salary).toLocaleString()}</span>
+                      <span className="font-bold text-slate-900 dark:text-slate-200">₹{Number(payroll.basic_salary).toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
                       <span className="text-slate-600 dark:text-slate-400">Allowances</span>
-                      <span className="font-bold text-emerald-600 dark:text-emerald-400">+${Number(payroll.allowances).toLocaleString()}</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">+₹{Number(payroll.allowances).toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800/60 font-medium">
                       <span className="text-slate-600 dark:text-slate-400">Deductions</span>
-                      <span className="font-bold text-rose-600 dark:text-rose-400">-${Number(payroll.deductions).toLocaleString()}</span>
+                      <span className="font-bold text-rose-600 dark:text-rose-400">-₹{Number(payroll.deductions).toLocaleString('en-IN')}</span>
                     </div>
                     <div className="flex justify-between pt-2 text-sm font-extrabold">
                       <span className="text-indigo-600 dark:text-indigo-400">Net Take-Home</span>
-                      <span className="text-slate-900 dark:text-white">${Number(payroll.net_salary).toLocaleString()}</span>
+                      <span className="text-slate-900 dark:text-white">₹{Number(payroll.net_salary).toLocaleString('en-IN')}</span>
                     </div>
                   </div>
                 ) : (

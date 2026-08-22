@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateSection }) => {
           ) : (
             <>
               <Button size="sm" variant="ghost" onClick={() => navigate('/login')}>
-                Sign In
+                Log in
               </Button>
               <Button
                 size="sm"
@@ -150,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateSection }) => {
             ) : (
               <>
                 <Button variant="secondary" className="w-full" onClick={() => navigate('/login')}>
-                  Sign In
+                  Log in
                 </Button>
                 <Button variant="primary" className="w-full" onClick={() => navigate('/register')}>
                   Get Started

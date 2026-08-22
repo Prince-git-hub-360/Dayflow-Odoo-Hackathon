@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -27,6 +27,7 @@ const leaveSchema = z
 type LeaveFormValues = z.infer<typeof leaveSchema>;
 
 export const EmployeeLeaves: React.FC = () => {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -59,6 +60,9 @@ export const EmployeeLeaves: React.FC = () => {
       setFeedback('Leave request successfully submitted!');
       setIsModalOpen(false);
       reset();
+      queryClient.invalidateQueries({ queryKey: ['myLeaves'] });
+      queryClient.invalidateQueries({ queryKey: ['pendingLeavesAdmin'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAnalyticsDashboard'] });
       refetch();
     } catch (err: any) {
       setFeedback(err.response?.data?.detail || 'Failed to submit leave request.');

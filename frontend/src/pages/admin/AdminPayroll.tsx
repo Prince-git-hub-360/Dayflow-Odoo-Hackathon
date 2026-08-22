@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { DollarSign, Edit, Save, CheckCircle2 } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { IndianRupee, Edit, Save, CheckCircle2 } from 'lucide-react';
 import { api } from '../../services/api';
 import type { Payroll } from '../../types';
 import { Card } from '../../components/ui/Card';
@@ -9,6 +9,7 @@ import { Modal } from '../../components/ui/Modal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export const AdminPayroll: React.FC = () => {
+  const queryClient = useQueryClient();
   const [selectedPayroll, setSelectedPayroll] = useState<Payroll | null>(null);
   const [basicSalary, setBasicSalary] = useState<number>(0);
   const [allowances, setAllowances] = useState<number>(0);
@@ -44,6 +45,8 @@ export const AdminPayroll: React.FC = () => {
       });
       setFeedback('Payroll structure successfully updated!');
       setSelectedPayroll(null);
+      queryClient.invalidateQueries({ queryKey: ['myPayroll'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAnalyticsReport'] });
       refetch();
     } catch (err: any) {
       setFeedback(err.response?.data?.detail || 'Payroll update failed.');
@@ -56,7 +59,7 @@ export const AdminPayroll: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       <div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-          <DollarSign className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Organization Payroll Control
+          <IndianRupee className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Organization Payroll Control
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
           Set and update basic salaries, allowances, and tax deductions across all employees.
@@ -96,16 +99,16 @@ export const AdminPayroll: React.FC = () => {
                       </span>
                     </td>
                     <td className="py-4 px-6 font-mono font-semibold text-slate-800 dark:text-slate-300">
-                      ${Number(p.basic_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      ₹{Number(p.basic_salary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-4 px-6 font-mono font-extrabold text-emerald-600 dark:text-emerald-400">
-                      +${Number(p.allowances).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      +₹{Number(p.allowances).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-4 px-6 font-mono font-extrabold text-rose-600 dark:text-rose-400">
-                      -${Number(p.deductions).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      -₹{Number(p.deductions).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-4 px-6 font-mono font-extrabold text-slate-900 dark:text-white">
-                      ${Number(p.net_salary).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      ₹{Number(p.net_salary).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                     </td>
                     <td className="py-4 px-6 text-right">
                       <Button
@@ -143,7 +146,7 @@ export const AdminPayroll: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
-                Basic Salary ($)
+                Basic Salary (₹)
               </label>
               <input
                 type="number"
@@ -158,7 +161,7 @@ export const AdminPayroll: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
-                Allowances ($)
+                Allowances (₹)
               </label>
               <input
                 type="number"
@@ -172,7 +175,7 @@ export const AdminPayroll: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-1.5">
-                Deductions ($)
+                Deductions (₹)
               </label>
               <input
                 type="number"
@@ -187,7 +190,7 @@ export const AdminPayroll: React.FC = () => {
             <div className="p-4 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 flex justify-between items-center text-xs">
               <span className="font-bold text-slate-800 dark:text-slate-300">Calculated Net Salary:</span>
               <span className="text-base font-extrabold text-indigo-700 dark:text-indigo-300">
-                ${(basicSalary + allowances - deductions).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                ₹{(basicSalary + allowances - deductions).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
             </div>
 

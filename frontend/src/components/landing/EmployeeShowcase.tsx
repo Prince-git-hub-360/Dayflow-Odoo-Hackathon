@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, ArrowRight, User, Clock, FileText, DollarSign } from 'lucide-react';
+import { CheckCircle2, ArrowRight, User, Clock, FileText, IndianRupee } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
@@ -44,10 +44,10 @@ export const EmployeeShowcase: React.FC = () => {
 
                 <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-amber-500" />
+                    <IndianRupee className="w-4 h-4 text-amber-500" />
                     <span className="text-slate-700 dark:text-slate-300 font-semibold">Net Take-Home Payslip</span>
                   </div>
-                  <span className="font-extrabold text-slate-900 dark:text-white">$116,000.00 / mo</span>
+                  <span className="font-extrabold text-slate-900 dark:text-white">₹1,16,000.00 / mo</span>
                 </div>
               </div>
             </Card>
