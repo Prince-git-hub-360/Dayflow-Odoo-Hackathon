@@ -79,10 +79,18 @@ async def list_employees(
     current_user: User = Depends(require_hr_or_admin),
     db: AsyncSession = Depends(get_db),
 ):
-    """HR / Admin list all employees with optional search and department filter."""
-    stmt = select(Employee).options(
-        selectinload(Employee.user), selectinload(Employee.department)
+    """
+    HR sees only EMPLOYEE role staff.
+    ADMIN sees everyone (both EMPLOYEE and HR staff).
+    """
+    stmt = (
+        select(Employee)
+        .join(Employee.user)
+        .options(selectinload(Employee.user), selectinload(Employee.department))
     )
+
+    if current_user.role == UserRole.HR:
+        stmt = stmt.where(User.role == UserRole.EMPLOYEE)
 
     if department_id:
         stmt = stmt.where(Employee.department_id == department_id)

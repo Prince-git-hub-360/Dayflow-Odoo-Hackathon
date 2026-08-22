@@ -12,6 +12,7 @@ import {
   Grid,
   List,
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import type { Employee, Department } from '../../types';
 import { Card } from '../../components/ui/Card';
@@ -21,6 +22,7 @@ import { Modal } from '../../components/ui/Modal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export const AdminEmployees: React.FC = () => {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedDepartment, setSelectedDepartment] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
@@ -68,11 +70,18 @@ export const AdminEmployees: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <Users className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Employee Directory
-          </h1>
-          <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-            View, search, and manage organization staff profiles and department assignments.
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <Users className="w-6 h-6 text-indigo-600 dark:text-indigo-400" /> Employee Directory
+            </h1>
+            <Badge variant={user?.role === 'ADMIN' ? 'danger' : 'warning'}>
+              {user?.role === 'ADMIN' ? 'FULL ADMIN SCOPE' : 'HR WORKSPACE'}
+            </Badge>
+          </div>
+          <p className="text-sm text-slate-600 dark:text-slate-400 font-medium mt-1">
+            {user?.role === 'HR'
+              ? 'Displaying employees only. HR staff accounts are managed exclusively by System Admin.'
+              : 'Full administrative control over all organization Employees and HR Managers.'}
           </p>
         </div>
 

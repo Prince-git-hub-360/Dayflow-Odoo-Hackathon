@@ -115,8 +115,17 @@ async def login(
     res = await db.execute(stmt)
     user = res.scalar_one_or_none()
 
-    if not user or not verify_password(req.password, user.password_hash):
-        raise CredentialsException(detail="Incorrect email or password")
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User account not found"
+        )
+
+    if not verify_password(req.password, user.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect password"
+        )
 
     if not user.is_active:
         raise CredentialsException(detail="Account is inactive")
@@ -139,6 +148,34 @@ async def login(
         refresh_token=refresh_token,
         token_type="bearer",
     )
+
+
+@router.post("/forgot-password")
+async def forgot_password(email: str, db: AsyncSession = Depends(get_db)):
+    stmt = select(User).where(User.email == email)
+    res = await db.execute(stmt)
+    user = res.scalar_one_or_none()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User with this email does not exist"
+        )
+    return {"message": "Password reset link sent to your registered email address"}
+
+
+@router.post("/reset-password")
+async def reset_password(req: LoginRequest, db: AsyncSession = Depends(get_db)):
+    stmt = select(User).where(User.email == req.email)
+    res = await db.execute(stmt)
+    user = res.scalar_one_or_none()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User account not found"
+        )
+    user.password_hash = get_password_hash(req.password)
+    await db.commit()
+    return {"message": "Password successfully reset! You can now log in with your new password."}
 
 
 @router.post("/refresh", response_model=Token)

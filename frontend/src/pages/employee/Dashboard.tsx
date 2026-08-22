@@ -154,7 +154,11 @@ export const EmployeeDashboard: React.FC = () => {
     { day: 'Sun', hours: 0, rate: 0 },
   ];
 
-  const firstName = user?.employee_profile?.first_name || user?.email?.split('@')[0] || 'Employee';
+  const displayName = user?.employee_profile?.first_name
+    ? `${user.employee_profile.first_name} ${user.employee_profile.last_name || ''}`.trim()
+    : user?.email
+    ? user.email.split('@')[0].charAt(0).toUpperCase() + user.email.split('@')[0].slice(1)
+    : 'Employee';
 
   return (
     <div className="space-y-8 animate-fade-in pb-12">
@@ -170,7 +174,7 @@ export const EmployeeDashboard: React.FC = () => {
             <span className="text-xs text-slate-500 font-mono">ID: {user?.employee_id || 'EMP-001'}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            {getGreeting()}, {firstName}! 👋
+            {getGreeting()}, {displayName}! 👋
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
             Here's your workday status, attendance analytics, and payroll at a glance.
@@ -182,10 +186,10 @@ export const EmployeeDashboard: React.FC = () => {
           <Link to="/profile">
             <div className="flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-600 transition-all cursor-pointer">
               <div className="w-9 h-9 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">
-                {firstName.charAt(0)}
+                {displayName.charAt(0)}
               </div>
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{firstName}</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{displayName}</p>
                 <p className="text-[10px] text-slate-500">{user?.role}</p>
               </div>
             </div>
