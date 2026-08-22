@@ -1,16 +1,24 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, CalendarDays, FileText, Mail, Phone, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { ArrowLeft, CalendarDays, FileText, Mail, Phone, MapPin, Trash2, AlertTriangle } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import type { Employee, Attendance, LeaveRequest, Payroll } from '../../types';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
+import { Modal } from '../../components/ui/Modal';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
 
 export const AdminEmployeeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const { data: employee, isLoading } = useQuery<Employee>({
     queryKey: ['adminEmployeeDetail', id],
@@ -43,6 +51,26 @@ export const AdminEmployeeDetail: React.FC = () => {
       return res.data;
     },
   });
+
+  const handleDelete = async () => {
+    if (!id) return;
+    setIsDeleting(true);
+    try {
+      await api.delete(`/employees/${id}`);
+      queryClient.invalidateQueries({ queryKey: ['adminEmployeesList'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAnalyticsDashboard'] });
+      navigate('/admin/employees');
+    } catch (err: any) {
+      alert(err.response?.data?.detail || 'Failed to delete account.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const canDelete =
+    user?.role === 'ADMIN'
+      ? employee?.user_id !== user.id
+      : employee?.user?.role === 'EMPLOYEE' && employee?.user_id !== user?.id;
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -79,11 +107,58 @@ export const AdminEmployeeDetail: React.FC = () => {
                 </div>
               </div>
 
-              <Badge variant={employee.user?.role === 'ADMIN' ? 'danger' : employee.user?.role === 'HR' ? 'warning' : 'neutral'} size="md">
-                Role: {employee.user?.role || 'EMPLOYEE'}
-              </Badge>
+              <div className="flex items-center gap-3">
+                <Badge variant={employee.user?.role === 'ADMIN' ? 'danger' : employee.user?.role === 'HR' ? 'warning' : 'neutral'} size="md">
+                  Role: {employee.user?.role || 'EMPLOYEE'}
+                </Badge>
+
+                {canDelete && (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => setIsDeleteModalOpen(true)}
+                    leftIcon={<Trash2 className="w-4 h-4" />}
+                  >
+                    Terminate Account
+                  </Button>
+                )}
+              </div>
             </div>
           </Card>
+
+          <Modal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            title="Confirm Employee Account Termination"
+          >
+            <div className="space-y-4">
+              <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 flex items-center gap-3 text-rose-800 dark:text-rose-400 text-xs font-semibold">
+                <AlertTriangle className="w-5 h-5 shrink-0 text-rose-600 dark:text-rose-400" />
+                <span>
+                  Warning: Terminating <strong>{employee.first_name} {employee.last_name}</strong> will remove their user account, attendance logs, and leave records from Dayflow HRMS.
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
+                Are you sure you want to permanently delete this account? This action cannot be reversed.
+              </p>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+                <Button type="button" variant="ghost" onClick={() => setIsDeleteModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  variant="danger"
+                  isLoading={isDeleting}
+                  onClick={handleDelete}
+                  leftIcon={<Trash2 className="w-4 h-4" />}
+                >
+                  Permanently Terminate Account
+                </Button>
+              </div>
+            </div>
+          </Modal>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="space-y-6">

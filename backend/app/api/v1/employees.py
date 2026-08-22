@@ -192,6 +192,51 @@ async def admin_update_employee(
     return res.scalar_one()
 
 
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_employee(
+    id: int,
+    current_user: User = Depends(require_hr_or_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Delete / Terminate an Employee account.
+    - System Admin can delete any Employee or HR account.
+    - HR Manager can ONLY delete Employee role accounts.
+    - Users cannot delete their own active account.
+    """
+    stmt = select(Employee).options(selectinload(Employee.user)).where(Employee.id == id)
+    res = await db.execute(stmt)
+    employee = res.scalar_one_or_none()
+
+    if not employee:
+        raise NotFoundException(detail=f"Employee with ID {id} not found")
+
+    target_user = employee.user
+    if not target_user:
+        await db.delete(employee)
+        await db.commit()
+        return None
+
+    # Prevent deleting self
+    if target_user.id == current_user.id:
+        raise PermissionDeniedException(detail="You cannot delete your own logged-in account")
+
+    # HR restriction: HR cannot delete other HRs or Admins
+    if current_user.role == UserRole.HR and target_user.role in (UserRole.HR, UserRole.ADMIN):
+        raise PermissionDeniedException(detail="HR Managers are restricted from deleting HR or Admin accounts")
+
+    await db.delete(target_user)
+    await log_action(
+        db=db,
+        actor_user_id=current_user.id,
+        action="EMPLOYEE_DELETED",
+        entity_type="Employee",
+        entity_id=id,
+    )
+    await db.commit()
+    return None
+
+
 # Department Endpoints
 @router.get("/departments/all", response_model=List[DepartmentOut])
 async def list_departments(db: AsyncSession = Depends(get_db)):
