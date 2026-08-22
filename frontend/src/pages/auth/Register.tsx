@@ -195,7 +195,7 @@ export const Register: React.FC = () => {
               {/* Role Selector Tabs */}
               <div>
                 <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                  Select Your Account Role
+                  Select Your Account Role <span className="text-rose-500 font-bold ml-0.5">*</span>
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
@@ -241,7 +241,7 @@ export const Register: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-                    First Name
+                    First Name <span className="text-rose-500 font-bold ml-0.5">*</span>
                   </label>
                   <input
                     type="text"
@@ -256,7 +256,7 @@ export const Register: React.FC = () => {
 
                 <div>
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-                    Last Name
+                    Last Name <span className="text-rose-500 font-bold ml-0.5">*</span>
                   </label>
                   <input
                     type="text"
@@ -274,7 +274,7 @@ export const Register: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 <div>
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-                    Employee ID
+                    Employee ID <span className="text-rose-500 font-bold ml-0.5">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -292,7 +292,7 @@ export const Register: React.FC = () => {
 
                 <div>
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-                    Job Title
+                    Job Title <span className="text-rose-500 font-bold ml-0.5">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -312,7 +312,7 @@ export const Register: React.FC = () => {
               {/* Grid Row 3: Work Email & Password */}
               <div>
                 <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
-                  Work Email Address
+                  Work Email Address <span className="text-rose-500 font-bold ml-0.5">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -331,7 +331,7 @@ export const Register: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                    Password
+                    Password <span className="text-rose-500 font-bold ml-0.5">*</span>
                   </label>
                   <span className="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
                     Min. 6 characters

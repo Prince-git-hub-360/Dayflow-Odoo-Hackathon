@@ -106,7 +106,9 @@ export const AdminDashboard: React.FC = () => {
   ];
 
 
-  const hrName = user?.employee_profile?.first_name || user?.email?.split('@')[0] || 'HR Manager';
+  const hrName = user?.employee_profile?.first_name
+    ? `${user.employee_profile.first_name} ${user.employee_profile.last_name || ''}`.trim()
+    : user?.email?.split('@')[0] || 'HR Manager';
 
   return (
     <div className="space-y-8 animate-fade-in pb-12">
