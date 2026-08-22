@@ -21,6 +21,12 @@ class EmployeeUpdatePermitted(BaseModel):
     phone: Optional[str] = Field(None, max_length=20)
     address: Optional[str] = Field(None, max_length=255)
     profile_picture: Optional[str] = None
+    pan_number: Optional[str] = None
+    aadhaar_number: Optional[str] = None
+    uan_number: Optional[str] = None
+    bank_account: Optional[str] = None
+    ifsc_code: Optional[str] = None
+    emergency_contact: Optional[str] = None
 
 
 class EmployeeAdminUpdate(BaseModel):
@@ -32,6 +38,12 @@ class EmployeeAdminUpdate(BaseModel):
     department_id: Optional[int] = None
     joining_date: Optional[date] = None
     profile_picture: Optional[str] = None
+    pan_number: Optional[str] = None
+    aadhaar_number: Optional[str] = None
+    uan_number: Optional[str] = None
+    bank_account: Optional[str] = None
+    ifsc_code: Optional[str] = None
+    emergency_contact: Optional[str] = None
 
 
 class EmployeeOut(BaseModel):
@@ -45,6 +57,12 @@ class EmployeeOut(BaseModel):
     department_id: Optional[int] = None
     joining_date: date
     profile_picture: Optional[str] = None
+    pan_number: Optional[str] = None
+    aadhaar_number: Optional[str] = None
+    uan_number: Optional[str] = None
+    bank_account: Optional[str] = None
+    ifsc_code: Optional[str] = None
+    emergency_contact: Optional[str] = None
     created_at: datetime
     updated_at: datetime
 

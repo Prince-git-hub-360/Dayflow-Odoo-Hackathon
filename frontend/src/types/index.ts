@@ -31,6 +31,12 @@ export interface Employee {
   department_id?: number;
   joining_date: string;
   profile_picture?: string;
+  pan_number?: string;
+  aadhaar_number?: string;
+  uan_number?: string;
+  bank_account?: string;
+  ifsc_code?: string;
+  emergency_contact?: string;
   created_at: string;
   updated_at: string;
   user?: User;

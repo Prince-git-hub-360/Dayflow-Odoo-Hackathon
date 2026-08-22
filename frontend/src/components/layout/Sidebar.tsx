@@ -83,7 +83,9 @@ export const Sidebar: React.FC = () => {
             <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate">
               {displayName}
             </p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
+            <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 truncate">
+              {user?.employee_profile?.job_title || `${user?.role || 'Employee'}`}
+            </p>
           </div>
         </div>
 

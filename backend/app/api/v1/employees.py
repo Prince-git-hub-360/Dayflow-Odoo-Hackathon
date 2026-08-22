@@ -53,6 +53,18 @@ async def update_my_employee_profile(
         employee.address = req.address
     if req.profile_picture is not None:
         employee.profile_picture = req.profile_picture
+    if req.pan_number is not None:
+        employee.pan_number = req.pan_number
+    if req.aadhaar_number is not None:
+        employee.aadhaar_number = req.aadhaar_number
+    if req.uan_number is not None:
+        employee.uan_number = req.uan_number
+    if req.bank_account is not None:
+        employee.bank_account = req.bank_account
+    if req.ifsc_code is not None:
+        employee.ifsc_code = req.ifsc_code
+    if req.emergency_contact is not None:
+        employee.emergency_contact = req.emergency_contact
 
     await log_action(
         db=db,

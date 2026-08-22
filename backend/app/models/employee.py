@@ -20,7 +20,13 @@ class Employee(Base):
         Integer, ForeignKey("departments.id", ondelete="SET NULL"), nullable=True
     )
     joining_date = Column(Date, default=date.today, nullable=False)
-    profile_picture = Column(String(500), nullable=True)
+    profile_picture = Column(String(1000), nullable=True)
+    pan_number = Column(String(20), nullable=True)
+    aadhaar_number = Column(String(20), nullable=True)
+    uan_number = Column(String(30), nullable=True)
+    bank_account = Column(String(50), nullable=True)
+    ifsc_code = Column(String(20), nullable=True)
+    emergency_contact = Column(String(255), nullable=True)
     created_at = Column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
