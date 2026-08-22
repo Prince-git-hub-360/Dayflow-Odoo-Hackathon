@@ -29,7 +29,7 @@ async def test_rbac_and_object_level_authorization(client):
     hr_token = res_hr.json()["access_token"]
     hr_headers = {"Authorization": f"Bearer {hr_token}"}
 
-    # 5. HR user accessing employee list -> Allowed (200 OK)
+    # 5. HR user accessing employee list -> Allowed (200 OK), filtered to EMPLOYEE role staff only
     res_hr_list = await client.get("/api/v1/employees/", headers=hr_headers)
     assert res_hr_list.status_code == 200
-    assert len(res_hr_list.json()) >= 4
+    assert len(res_hr_list.json()) == 2
